@@ -1,0 +1,85 @@
+%--------------------------------------------------------------------%
+%                                                                    %
+%                           IDENTIFICATION                           %
+%                                                                    %
+%--------------------------------------------------------------------%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{progproving}[2021/09/12 ProgProving]
+
+%--------------------------------------------------------------------%
+%                                                                    %
+%                              PACKAGES                              %
+%                                                                    %
+%--------------------------------------------------------------------%
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{amsmath}
+
+%--------------------------------------------------------------------%
+%                                                                    %
+%                              OPTIONS                               %
+%                                                                    %
+%--------------------------------------------------------------------%
+
+\DeclareOption*{\PackageWarning{progproving}{Unknown ‘\CurrentOption’}}
+\ProcessOptions\relax
+
+%--------------------------------------------------------------------%
+%                                                                    %
+%                               BODY                                 %
+%                                                                    %
+%--------------------------------------------------------------------%
+
+% ProgProving State
+% Usage : \state{<state>}
+% Requires Math mode
+\newcommand{\state}[1] {
+    \left\{
+        \begin{aligned}
+            #1
+        \end{aligned}
+    \right\}
+}
+
+% ProgProving sp
+% Usage : \ppsp{<instructions>, <state>}
+% Requires Math mode
+\newcommand{\ppsp}[2] {sp\left(#1,#2\right)}
+
+% ProgProving wp
+% Usage : \ppwp{<instructions<, <state>}
+% Requires Math mode
+\newcommand{\ppwp}[2] {wp\left(#1,#2\right)}
+
+% ProgProving Precondition
+% Usage : \pre
+\newcommand{\pre} {P}
+
+% ProgProving Postcondition
+% Usage : \post
+\newcommand{\post} {Q}
+
+% ProgProving Invariant
+% Usage : \inv
+\newcommand{\inv} {I}
+
+% ProgProving Loop Condition
+% Usage : \cond
+\newcommand{\cond} {B}
+
+% ProgProving Loop Precondition
+% Usage : \lpre
+\newcommand{\lpre} {R}
+
+% ProgProving Loop Postcondition
+% Usage : \lpost
+\newcommand{\lpost} {T}
+
+% ProgProving Loop Initialisation
+% Usage : \init
+\newcommand{\init} {INIT}
+
+% ProgProving Loop Iteration
+% Usage : \iter
+\newcommand{\iter} {ITER}
