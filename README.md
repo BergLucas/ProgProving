@@ -152,7 +152,7 @@ This command allows you to easily display the loop postcondition letter.
 Usage :
 
 ```latex
-\lpre
+\lpost
 ```
 
 ### ProgProving Loop Initialisation (INIT)
