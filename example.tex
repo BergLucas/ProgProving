@@ -1,0 +1,384 @@
+\documentclass{article}
+
+% Packages
+\usepackage[a4paper]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{progproving}
+\usepackage{listings}
+
+\geometry{top=25mm,bottom=25mm,inner=25mm,outer=20mm}
+\allowdisplaybreaks
+
+\begin{document}
+\title{ProgProving package : Example}
+
+\author{BERG Lucas}
+
+\maketitle
+
+\section{Introduction}
+    This document is an example for the ProgProving package. We will prove the following function :
+
+    \begin{lstlisting}[language=C]
+int sum(int array[], int length) {
+    int total = 0;
+    int i = 0;
+    while (i < length) {
+        total = total + array[i];
+        i = i + 1;
+    }
+    return total;
+}
+    \end{lstlisting}
+
+\section{Specifications}
+    First, let's write the specifications of the function.
+    
+    \subsection{Header}
+        \begin{lstlisting}[language=C]
+int sum(int array[], int length)
+        \end{lstlisting}
+    
+    \subsection{Environment}
+        /
+    
+    \subsection{Preconditions}
+        \begin{flalign*}
+            & \pre = \state{
+                0 \leq length = \text{size of array[]}
+            } &
+        \end{flalign*}
+    
+    \subsection{Postconditions}
+        \begin{flalign*}
+            & \post = \state{
+                & length = length_0 \wedge \\
+                & array = array_0 \wedge \\
+                & sum = \sum^{length-1}_{j=0} array[j]
+            } &
+        \end{flalign*}
+
+\section{Proof using the strongest postcondition (sp)}
+    \subsection{Definitions}
+        \begin{flalign*}
+            & \init \equiv
+                \begin{aligned}
+                    & total := 0; \\
+                    & i := 0;
+                \end{aligned}
+            & \\
+            & \iter \equiv 
+                \begin{aligned}
+                    & total := total + array[i]; \\
+                    & i := i + 1;
+                \end{aligned}
+            & \\
+            & \term \equiv  sum := total; & \\
+            & \text{Loop condition} : \cond \equiv i < length & \\
+            & \text{Loop preconditions} : \lpre = \state{
+                & 0 \leq length = \text{size of array[]} \wedge \\
+                & total = 0 \wedge \\
+                & i = 0
+            } &
+        \end{flalign*}
+    
+    \subsection{Find the loop invariant}
+        First, we need to find the loop invariant. In most cases, the invariant will describe the state of the loop using i-1. In our case, the invariant is :
+        \begin{flalign*}
+            & \inv = \state{
+                & 0 \leq i \leq length \wedge \\
+                & total = \sum^{i-1}_{j = 0} array[j] \wedge \\
+                & length = length_0 \wedge \\
+                & array = array_0
+            } &
+        \end{flalign*}
+    
+    \subsection{Proof that $\inv$ is an invariant}
+        Now, we have to prove $\{ \inv \wedge \cond \} \iter \{ \inv \}$. If we can prove that, this means that the invariant is correct.
+        First, let's define $\inv \wedge \cond$
+        \begin{flalign*}
+            & \inv \wedge \cond = \state{
+                & 0 \leq i \leq length \wedge \\
+                & total = \sum^{i-1}_{j = 0} array[j] \wedge \\
+                & length = length_0 \wedge \\
+                & array = array_0
+            } \wedge \state{
+                i < length
+            } = \state{
+                & 0 \leq i < length \wedge \\
+                & total = \sum^{i-1}_{j = 0} array[j] \wedge \\
+                & length = length_0 \wedge \\
+                & array = array_0
+            } &
+        \end{flalign*}
+
+        Then, we can do a sp to check if $\inv$ is an invariant.
+
+        \begin{flalign*}
+                & \ppsp{\term}{\inv \wedge \cond} & \\
+            %
+            %
+            %
+            =   & \ppsp{
+                    \begin{aligned}
+                        & total := total + array[i]; \\
+                        & i := i + 1;
+                    \end{aligned}
+                }{
+                    \state{
+                        & 0 \leq i < length \wedge \\
+                        & total = \sum^{i-1}_{j = 0} array[j] \wedge \\
+                        & length = length_0 \wedge \\
+                        & array = array_0
+                    }
+                } & \\
+            %
+            %
+            %
+            =   & \ppsp{
+                    i := i + 1;
+                }{
+                    \state{
+                        & 0 \leq i < length \wedge \\
+                        & total = \sum^{i-1}_{j = 0} array[j] \wedge \\
+                        & length = length_0 \wedge \\
+                        & array = array_0
+                    }[total/total']
+                    \wedge
+                    \state{
+                        total := total + array[i]
+                    }[total/total']
+                } & \\
+            %
+            %
+            %
+            =   & \ppsp{
+                    i := i + 1;
+                }{
+                    \state{
+                        & 0 \leq i < length \wedge \\
+                        & total' = \sum^{i-1}_{j = 0} array[j] \wedge \\
+                        & length = length_0 \wedge \\
+                        & array = array_0
+                    }
+                    \wedge
+                    \state{
+                        total = total' + array[i]
+                    }
+                } & \\
+            %
+            %
+            %
+            =   & \ppsp{
+                    i := i + 1;
+                }{
+                    \state{
+                        & 0 \leq i < length \wedge \\
+                        & total' = \sum^{i-1}_{j = 0} array[j] \wedge \\
+                        & length = length_0 \wedge \\
+                        & array = array_0
+                    }
+                    \wedge
+                    \state{
+                        total - array[i] = total'
+                    }
+                } & \\
+            %
+            %
+            %
+            =   & \ppsp{
+                    i := i + 1;
+                }{
+                    \state{
+                        & 0 \leq i < length \wedge \\
+                        & total - array[i] = \sum^{i-1}_{j = 0} array[j] \wedge \\
+                        & length = length_0 \wedge \\
+                        & array = array_0
+                    }
+                } & \\
+            %
+            %
+            %
+            =   & \ppsp{
+                    i := i + 1;
+                }{
+                    \state{
+                        & 0 \leq i < length \wedge \\
+                        & total = (\sum^{i-1}_{j = 0} array[j]) + array[i] \wedge \\
+                        & length = length_0 \wedge \\
+                        & array = array_0
+                    }
+                } & \\
+            %
+            %
+            %
+            =   & \ppsp{
+                    i := i + 1;
+                }{
+                    \state{
+                        & 0 \leq i < length \wedge \\
+                        & total = \sum^{i}_{j = 0} array[j] \wedge \\
+                        & length = length_0 \wedge \\
+                        & array = array_0
+                    }
+                } & \\
+            %
+            %
+            %
+            =   & \state{
+                    & 0 \leq i < length \wedge \\
+                    & total = \sum^{i}_{j = 0} array[j] \wedge \\
+                    & length = length_0 \wedge \\
+                    & array = array_0
+                }[i/i'] \wedge \state{
+                    i := i + 1
+                }[i/i'] & \\
+            %
+            %
+            %
+            =   & \state{
+                    & 0 \leq i' < length \wedge \\
+                    & total = \sum^{i'}_{j = 0} array[j] \wedge \\
+                    & length = length_0 \wedge \\
+                    & array = array_0
+                } \wedge \state{
+                    i = i' + 1
+                } & \\
+            %
+            %
+            %
+            =   & \state{
+                    & 0 \leq i' < length \wedge \\
+                    & total = \sum^{i'}_{j = 0} array[j] \wedge \\
+                    & length = length_0 \wedge \\
+                    & array = array_0
+                } \wedge \state{
+                    i - 1 = i'
+                } & \\
+            %
+            %
+            %
+            =   & \state{
+                    & 0 \leq i-1 < length \wedge \\
+                    & total = \sum^{i-1}_{j = 0} array[j] \wedge \\
+                    & length = length_0 \wedge \\
+                    & array = array_0
+                } & \\
+            %
+            %
+            %
+            =   & \state{
+                    & 0 < i \leq length \wedge \\
+                    & total = \sum^{i-1}_{j = 0} array[j] \wedge \\
+                    & length = length_0 \wedge \\
+                    & array = array_0
+                } & \\
+            %
+            %
+            %
+            & \Rightarrow \inv &
+        \end{flalign*}
+
+        All right, the invariant is correct so we can move on to the next step.
+    
+    \subsection{Proof that $\inv$ is strong enough}
+        The next step is to prove that the invariant is true before the loop so we need to prove $\lpre \Rightarrow \inv$.
+
+        \begin{flalign*}
+            \lpre = & \state{
+                        & 0 \leq length = \text{size of array[]} \wedge \\
+                        & total = 0 \wedge \\
+                        & i = 0
+                    } & \\
+            %
+            %
+            %
+                  = & \state{
+                        & 0 = i \leq length = \text{size of array[]} \wedge \\
+                        & total = \sum^{-1}_{j = 0} array[j] = 0
+                    } & \\
+            %
+            %
+            %
+                    & \Rightarrow \inv
+        \end{flalign*}
+
+        All right, the invariant is strong enough so we can move on to the next step.
+
+    \subsection{Proof that the program will return the postconditions after the loop}
+        The next step is to prove that the program will return the postconditions after the loop so we need to prove $\{ \inv \wedge \neg \cond \} \term \{ \post \}$.
+        First, let's define $\inv \wedge \neg \cond$
+        \begin{flalign*}
+            \inv \wedge \neg \cond & = \state{
+                & 0 \leq i \leq length \wedge \\
+                & total = \sum^{i-1}_{j = 0} array[j] \wedge \\
+                & length = length_0 \wedge \\
+                & array = array_0
+            } \wedge \state{
+                i \geq length
+            } = \state{
+                & i = length \wedge \\
+                & total = \sum^{i-1}_{j = 0} array[j] \wedge \\
+                & length = length_0 \wedge \\
+                & array = array_0
+            } & \\
+            & = \state{
+                & total = \sum^{length-1}_{j = 0} array[j] \wedge \\
+                & length = length_0 \wedge \\
+                & array = array_0
+            } &
+        \end{flalign*}
+
+        Then, we can do a sp.
+
+        \begin{flalign*}
+                & \ppsp{\term}{\inv \wedge \neg \cond} & \\
+            %
+            %
+            %
+            =   & \ppsp{
+                    sum := total;
+                }{
+                    \state{
+                        & total = \sum^{length-1}_{j = 0} array[j] \wedge \\
+                        & length = length_0 \wedge \\
+                        & array = array_0
+                    }
+                } & \\
+            %
+            %
+            %
+            =   & \state{
+                    & total = \sum^{length-1}_{j = 0} array[j] \wedge \\
+                    & length = length_0 \wedge \\
+                    & array = array_0
+                } \wedge \state{
+                    sum := total;
+                } & \\
+            %
+            %
+            %
+            =   & \state{
+                    & total = \sum^{length-1}_{j = 0} array[j] \wedge \\
+                    & length = length_0 \wedge \\
+                    & array = array_0
+                } \wedge \state{
+                    sum = total;
+                } & \\
+            %
+            %
+            %
+            =   & \state{
+                    & sum = \sum^{length-1}_{j = 0} array[j] \wedge \\
+                    & length = length_0 \wedge \\
+                    & array = array_0
+                } & \\
+            %
+            %
+            %
+            & \Rightarrow \post &
+        \end{flalign*}
+
+        Everything is proved so the program is correct.
+\end{document}
