@@ -175,6 +175,16 @@ Usage :
 \iter
 ```
 
+### ProgProving Loop Termination (TERM)
+
+This command allows you to easily display the loop termination letters.
+
+Usage :
+
+```latex
+\term
+```
+
 ## Developers
 
 ### Contributors
