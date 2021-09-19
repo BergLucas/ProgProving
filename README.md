@@ -7,7 +7,6 @@ ProgProving is a LaTeX package that aims to help people prove their codes.
 ProgProving requires:
 
 -   [amsmath](https://ctan.org/pkg/amsmath)
--   [inputenc](https://ctan.org/pkg/inputenc)
 
 ## Download
 
