@@ -5,7 +5,7 @@
 %--------------------------------------------------------------------%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{progproving}[2021/09/19 ProgProving]
+\ProvidesPackage{progproving}[2022/08/26 ProgProving]
 
 %--------------------------------------------------------------------%
 %                                                                    %
@@ -31,7 +31,7 @@
 %--------------------------------------------------------------------%
 
 % ProgProving State
-% Usage : \state{<state>}
+% Usage : \state{<constraints>}
 % Requires Math mode
 \newcommand{\state}[1] {
     \left\{
@@ -41,13 +41,22 @@
     \right\}
 }
 
+% ProgProving Sequence of Instructions
+% Usage : \seq{<instructions>}
+% Requires Math mode
+\newcommand{\seq}[1] {
+    \begin{aligned}
+        #1
+    \end{aligned}
+}
+
 % ProgProving sp
-% Usage : \ppsp{<instructions>, <state>}
+% Usage : \ppsp{<instruction>}{<state>}
 % Requires Math mode
 \newcommand{\ppsp}[2] {sp\left(#1,#2\right)}
 
 % ProgProving wp
-% Usage : \ppwp{<instructions<, <state>}
+% Usage : \ppwp{<instruction>}{<state>}
 % Requires Math mode
 \newcommand{\ppwp}[2] {wp\left(#1,#2\right)}
 

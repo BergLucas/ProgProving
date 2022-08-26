@@ -31,7 +31,7 @@ This command allows you to easily display the state of a program.
 Usage :
 
 ```latex
-\state{<state>}
+\state{<constraints>}
 ```
 
 Example :
@@ -46,6 +46,32 @@ Example output :
 {x = 1}
 ```
 
+### ProgProving Sequence of Instructions
+
+This command allows you to easily display a sequence of instructions.
+
+Usage :
+
+```latex
+\seq{<instructions>}
+```
+
+Example :
+
+```latex
+\seq{
+    & x := 1; \\
+    & y := 2;
+}
+```
+
+Example output :
+
+```
+x := 1;
+y := 2;
+```
+
 ### ProgProving sp
 
 This command allows you to easily display a sp.
@@ -55,13 +81,13 @@ This command allows you to easily display a sp.
 Usage :
 
 ```latex
-\ppsp{<instructions>, <state>}
+\ppsp{<instruction>}{<state>}
 ```
 
 Example :
 
 ```latex
-\ppsp{x := 2, \state{x = 1}}
+\ppsp{x := 2}{\state{x = 1}}
 ```
 
 Example output :
@@ -79,13 +105,13 @@ This command allows you to easily display a wp.
 Usage :
 
 ```latex
-\ppwp{<instructions>, <state>}
+\ppwp{<instruction>}{<state>}
 ```
 
 Example :
 
 ```latex
-\ppwp{x := 2, \state{x = 1}}
+\ppwp{x := 2}{\state{x = 1}}
 ```
 
 Example output :
