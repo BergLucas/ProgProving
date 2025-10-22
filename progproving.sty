@@ -5,7 +5,7 @@
 %--------------------------------------------------------------------%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{progproving}[2022/08/26 ProgProving]
+\ProvidesPackage{progproving}[2025/10/22 ProgProving]
 
 %--------------------------------------------------------------------%
 %                                                                    %
@@ -21,6 +21,19 @@
 %                                                                    %
 %--------------------------------------------------------------------%
 
+% Language settings
+\newcommand{\pp@term}{TERM}
+
+\@ifpackageloaded{babel}{
+  \iflanguage{french}{
+    \renewcommand{\pp@term}{CLOT}
+  }{
+    % Do nothing if the language is not French
+  }
+}{
+  % Do nothing if babel is not loaded
+}
+
 \DeclareOption*{\PackageWarning{progproving}{Unknown ‘\CurrentOption’}}
 \ProcessOptions\relax
 
@@ -34,20 +47,20 @@
 % Usage: \state{<constraints>}
 % Requires Math mode
 \newcommand*{\state}[1] {
-    \left\{
-        \begin{aligned}
-            #1
-        \end{aligned}
-    \right\}
+  \left\{
+    \begin{aligned}
+      #1
+    \end{aligned}
+  \right\}
 }
 
 % ProgProving Sequence of Instructions
 % Usage: \seq{<instructions>}
 % Requires Math mode
 \newcommand*{\seq}[1] {
-    \begin{aligned}
-        #1
-    \end{aligned}
+  \begin{aligned}
+    #1
+  \end{aligned}
 }
 
 % ProgProving sp
@@ -94,4 +107,4 @@
 
 % ProgProving Loop Termination
 % Usage: \term
-\newcommand{\term} {TERM}
+\newcommand{\term} {\pp@term}
