@@ -46,7 +46,7 @@ int sum(int array[], int length)
 
 \subsection{Precondition}
 \begin{flalign*}
-  & \pre = \state{
+  & \pre \equiv \state{
     & 0 \leq length \land \\
     & length = \text{size of array[]}
   } &
@@ -54,7 +54,7 @@ int sum(int array[], int length)
 
 \subsection{Postcondition}
 \begin{flalign*}
-  & \post = \state{
+  & \post \equiv \state{
     & 0 \leq length \land \\
     & length = \text{size of array[]} \land \\
     & sum = \sum^{length-1}_{j=0} array[j] \land \\
@@ -95,7 +95,7 @@ First, we need to calculate the instructions before the loop by doing $\state{\p
 \begin{flalign*}
   & \ppsp{\init}{\state{\pre}} & \\
   %
-  = & \ppsp{
+  \equiv & \ppsp{
     \seq{
       & total := 0; \\
       & i := 0;
@@ -107,7 +107,7 @@ First, we need to calculate the instructions before the loop by doing $\state{\p
     }
   } & \\
   %
-  = & \ppsp{
+  \equiv & \ppsp{
     i := 0;
   }{
     \state{
@@ -120,7 +120,7 @@ First, we need to calculate the instructions before the loop by doing $\state{\p
     }[total/total']
   } & \\
   %
-  = & \ppsp{
+  \equiv & \ppsp{
     i := 0;
   }{
     \state{
@@ -133,7 +133,7 @@ First, we need to calculate the instructions before the loop by doing $\state{\p
     }
   } & \\
   %
-  = & \ppsp{
+  \equiv & \ppsp{
     i := 0;
   }{
     \state{
@@ -143,7 +143,7 @@ First, we need to calculate the instructions before the loop by doing $\state{\p
     }
   } & \\
   %
-  = & \state{
+  \equiv & \state{
     & 0 \leq length \land \\
     & length = \text{size of array[]} \land \\
     & total = 0
@@ -153,7 +153,7 @@ First, we need to calculate the instructions before the loop by doing $\state{\p
     i := 0
   }[i/i'] & \\
   %
-  = & \state{
+  \equiv & \state{
     & 0 \leq length \land \\
     & length = \text{size of array[]} \land \\
     & total = 0
@@ -163,14 +163,14 @@ First, we need to calculate the instructions before the loop by doing $\state{\p
     i = 0
   } & \\
   %
-  = & \state{
+  \equiv & \state{
     & 0 \leq length \land \\
     & length = \text{size of array[]} \land \\
     & total = 0 \land \\
     & i = 0
   } & \\
   %
-  = & \lpre &
+  \equiv & \lpre &
 \end{flalign*}
 
 All right, we got the loop precondition, so we can move on to the next step.
@@ -183,7 +183,7 @@ Now, we need to prove the loop instruction. There are 4 steps.
 First, we need to find the loop invariant $\inv$. In most cases, the invariant will describe the state of the loop using i-1. In our case, the invariant is:
 
 \begin{flalign*}
-  & \inv = \state{
+  & \inv \equiv \state{
     & 0 \leq i \leq length \land \\
     & length = \text{size of array[]} \land \\
     & total = \sum^{i-1}_{j = 0} array[j]
@@ -195,13 +195,13 @@ Now, we have to prove $\{ \inv \land \cond \} \iter \{ \inv \}$. If we can prove
 First, let's define $\inv \land \cond$
 
 \begin{flalign*}
-  & \inv \land \cond = \state{
+  & \inv \land \cond \equiv \state{
     & 0 \leq i \leq length \land \\
     & length = \text{size of array[]} \land \\
     & total = \sum^{i-1}_{j = 0} array[j]
   } \land \state{
     i < length
-  } = \state{
+  } \equiv \state{
     & 0 \leq i < length \land \\
     & length = \text{size of array[]} \land \\
     & total = \sum^{i-1}_{j = 0} array[j]
@@ -213,7 +213,7 @@ Then, we can do a sp to check if $\inv$ is an invariant.
 \begin{flalign*}
   & \ppsp{\iter}{\inv \land \cond} & \\
   %
-  = & \ppsp{
+  \equiv & \ppsp{
     \seq{
       & total := total + array[i]; \\
       & i := i + 1;
@@ -226,7 +226,7 @@ Then, we can do a sp to check if $\inv$ is an invariant.
     }
   } & \\
   %
-  = & \ppsp{
+  \equiv & \ppsp{
     i := i + 1;
   }{
     \state{
@@ -240,7 +240,7 @@ Then, we can do a sp to check if $\inv$ is an invariant.
     }[total/total']
   } & \\
   %
-  = & \ppsp{
+  \equiv & \ppsp{
     i := i + 1;
   }{
     \state{
@@ -254,7 +254,7 @@ Then, we can do a sp to check if $\inv$ is an invariant.
     }
   } & \\
   %
-  = & \ppsp{
+  \equiv & \ppsp{
     i := i + 1;
   }{
     \state{
@@ -268,7 +268,7 @@ Then, we can do a sp to check if $\inv$ is an invariant.
     }
   } & \\
   %
-  = & \ppsp{
+  \equiv & \ppsp{
     i := i + 1;
   }{
     \state{
@@ -278,7 +278,7 @@ Then, we can do a sp to check if $\inv$ is an invariant.
     }
   } & \\
   %
-  = & \ppsp{
+  \equiv & \ppsp{
     i := i + 1;
   }{
     \state{
@@ -288,7 +288,7 @@ Then, we can do a sp to check if $\inv$ is an invariant.
     }
   } & \\
   %
-  = & \ppsp{
+  \equiv & \ppsp{
     i := i + 1;
   }{
     \state{
@@ -298,7 +298,7 @@ Then, we can do a sp to check if $\inv$ is an invariant.
     }
   } & \\
   %
-  = & \state{
+  \equiv & \state{
     & 0 \leq i < length \land \\
     & length = \text{size of array[]} \land \\
     & total = \sum^{i}_{j = 0} array[j]
@@ -306,7 +306,7 @@ Then, we can do a sp to check if $\inv$ is an invariant.
     i := i + 1
   }[i/i'] & \\
   %
-  = & \state{
+  \equiv & \state{
     & 0 \leq i' < length \land \\
     & length = \text{size of array[]} \land \\
     & total = \sum^{i'}_{j = 0} array[j]
@@ -314,7 +314,7 @@ Then, we can do a sp to check if $\inv$ is an invariant.
     i = i' + 1
   } & \\
   %
-  = & \state{
+  \equiv & \state{
     & 0 \leq i' < length \land \\
     & length = \text{size of array[]} \land \\
     & total = \sum^{i'}_{j = 0} array[j]
@@ -322,13 +322,13 @@ Then, we can do a sp to check if $\inv$ is an invariant.
     i - 1 = i'
   } & \\
   %
-  = & \state{
+  \equiv & \state{
     & 0 \leq i-1 < length \land \\
     & length = \text{size of array[]} \land \\
     & total = \sum^{i-1}_{j = 0} array[j]
   } & \\
   %
-  = & \state{
+  \equiv & \state{
     & 0 < i \leq length \land \\
     & length = \text{size of array[]} \land \\
     & total = \sum^{i-1}_{j = 0} array[j]
@@ -343,14 +343,14 @@ All right, the invariant is correct, so we can move on to the next step.
 The next step is to prove that the invariant is true before the loop, so we need to prove $\lpre \Rightarrow \inv$.
 
 \begin{flalign*}
-  \lpre = & \state{
+  \lpre \equiv & \state{
     & 0 \leq length \land \\
     & length = \text{size of array[]} \land \\
     & total = 0 \land \\
     & i = 0
   } & \\
   %
-  = & \state{
+  \equiv & \state{
     & 0 = i \land i \leq length \land \\
     & length = \text{size of array[]} \land \\
     & total = \sum^{i-1}_{j = 0} array[j]
@@ -365,24 +365,24 @@ All right, the invariant is strong enough, so we can move on to the next step.
 The last step is to calculate the strongest loop postcondition $\lpost$, so we need to simplify $\state{\inv \land \neg \cond}$.
 
 \begin{flalign*}
-  \inv \land \neg \cond = & \state{
+  \inv \land \neg \cond \equiv & \state{
     & 0 \leq i \leq length \land \\
     & length = \text{size of array[]} \land \\
     & total = \sum^{i-1}_{j = 0} array[j]
   } \land \state{
     i \geq length
   } & \\
-  = & \state{
+  \equiv & \state{
     & 0 \leq i \land i = length \land \\
     & length = \text{size of array[]} \land \\
     & total = \sum^{i-1}_{j = 0} array[j]
   } & \\
-  = & \state{
+  \equiv & \state{
     & 0 \leq length \land \\
     & length = \text{size of array[]} \land \\
     & total = \sum^{length-1}_{j = 0} array[j]
   } & \\
-  = & \lpost
+  \equiv & \lpost
 \end{flalign*}
 
 \subsection{The instructions after the loop}
@@ -391,7 +391,7 @@ Finally, we need to calculate the instructions after the loop by doing $\state{\
 \begin{flalign*}
   & \ppsp{\term}{\lpost} & \\
   %
-  = & \ppsp{
+  \equiv & \ppsp{
     sum := total;
   }{
     \state{
@@ -401,7 +401,7 @@ Finally, we need to calculate the instructions after the loop by doing $\state{\
     }
   } & \\
   %
-  = & \state{
+  \equiv & \state{
     & 0 \leq length \land \\
     & length = \text{size of array[]} \land \\
     & total = \sum^{length-1}_{j = 0} array[j]
@@ -411,7 +411,7 @@ Finally, we need to calculate the instructions after the loop by doing $\state{\
     sum := total;
   }[sum/sum'] & \\
   %
-  = & \state{
+  \equiv & \state{
     & 0 \leq length \land \\
     & length = \text{size of array[]} \land \\
     & total = \sum^{length-1}_{j = 0} array[j]
@@ -419,7 +419,7 @@ Finally, we need to calculate the instructions after the loop by doing $\state{\
     sum = total
   } & \\
   %
-  = & \state{
+  \equiv & \state{
     & 0 \leq length \land \\
     & length = \text{size of array[]} \land \\
     & sum = \sum^{length-1}_{j = 0} array[j]
